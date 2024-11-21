@@ -1,0 +1,126 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>ShoppingList</AssemblyName>
+    <Product>Shopping List</Product>
+    <Version>0.1.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>ShoppingList</RootNamespace>
+	<UnityPath>G:\Steam\steamapps\common\Old Market Simulator\Old Market Simulator_Data\Managed</UnityPath>
+  </PropertyGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="StbRectPackSharp" Version="1.0.4" />
+  </ItemGroup>
+
+
+	<ItemGroup Label="_Data">
+		<Reference Include="0Harmony20">
+		  <HintPath>..\..\..\..\Steam\steamapps\common\Old Market Simulator\BepInEx\core\0Harmony20.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
+		<Reference Include="Assembly-CSharp">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>$(UnityPath)\Assembly-CSharp.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="BepInEx">
+		  <HintPath>..\..\..\..\Steam\steamapps\common\Old Market Simulator\BepInEx\core\BepInEx.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
+		<Reference Include="BepInEx.Harmony">
+		  <HintPath>..\..\..\..\Steam\steamapps\common\Old Market Simulator\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
+	</ItemGroup>
+
+	<!-- Add Unity references -->
+	<ItemGroup Label="Unity">
+		<Reference Include="System.Collections">
+		  <Private>False</Private>
+		</Reference>
+		<Reference Include="netstandard">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>$(UnityPath)\netstandard.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="Unity.NetCode.Runtime">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>$(UnityPath)\Unity.NetCode.Runtime.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="Unity.VisualScripting.Core">
+		  <HintPath>$(UnityPath)\Unity.VisualScripting.Core.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine">
+		  <HintPath>$(UnityPath)\UnityEngine.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+		  <HintPath>$(UnityPath)\UnityEngine.CoreModule.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="mscorlib">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Core">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Xml.Linq">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Xml">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Runtime.Serialization">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Numerics">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.IO.Compression.FileSystem">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Drawing">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Update="System.Data">
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+</Project>
