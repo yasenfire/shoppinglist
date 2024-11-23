@@ -62,8 +62,8 @@ namespace ShoppingList
                     float recommendedPrice = GameManager.Instance.GetRecommendedPrice(item);
 
                     float sellingRecommendedRatio = recommendedPrice / sellingPrice;
-                    if (sellingRecommendedRatio > 1f) weight *= Mathf.Lerp(1, 4, Mathf.Clamp(sellingRecommendedRatio, 1f, 2f) - 1f);
-                    else weight *= Mathf.Lerp(0.1f, 1f, (Mathf.Clamp(sellingRecommendedRatio, 0.9f, 1f) - 0.9f) * 10f);
+                    if (sellingRecommendedRatio > 1f) weight *= Mathf.Lerp(1, 8, Mathf.Clamp(sellingRecommendedRatio, 1f, 2f) - 1f);
+                    else weight *= Mathf.Lerp(0.1f, 1f, (Mathf.Clamp(sellingRecommendedRatio, 0.8f, 1f) - 0.8f) * 10f);
 
                     weight *= Random.Range(0.8f, 1.2f);
 
@@ -124,7 +124,17 @@ namespace ShoppingList
                 {
                     ProductSO item = weightedList.Next();
                     buyList.Add(item);
-                    if (list2.Contains(item)) itemsInMarket += 1;
+
+                    int increment = 1;
+
+                    while (i < standardNum && Random.Range(0f, 1f) < item.amount / 100 / increment)
+                    {
+                        buyList.Add(item);
+                        increment += 1;
+                        i += 1;
+                    }
+
+                    if (list2.Contains(item)) itemsInMarket += increment;
                 }
 
                 if ((itemsInMarket / standardNum) >= 0.5f)
@@ -156,8 +166,8 @@ namespace ShoppingList
                 Transform initialSlot = __instance.productSlots.GetChild(0);
                 Transform lastSlot = __instance.productSlots.GetChild(8);
 
-                float areaWidth = Mathf.Abs(lastSlot.localPosition.x * 10000 - initialSlot.localPosition.x * 10000);
-                float areaHeight = Mathf.Abs(lastSlot.localPosition.z * 10000 - initialSlot.localPosition.z * 10000);
+                float areaWidth = Mathf.Abs(lastSlot.localPosition.x * 1000 - initialSlot.localPosition.x * 1000);
+                float areaHeight = Mathf.Abs(lastSlot.localPosition.z * 1000 - initialSlot.localPosition.z * 1000) * 2;
 
                 List<ProductSO> shoppingCart = customers[0].shoppingCart;
                 shoppingCart.Sort((x, y) => x.id.CompareTo(y.id));
@@ -171,7 +181,7 @@ namespace ShoppingList
                     GameObject newItem = Instantiate(GameManager.Instance.checkoutItem, child.position, child.rotation);
                     Mesh renderer = productSO.pickupPrefab.GetComponentsInChildren<MeshFilter>()[0].sharedMesh;
                     Vector3 itemBounds = renderer.bounds.size;
-                    packer.PackRect(Mathf.RoundToInt(itemBounds.x * 10000), Mathf.RoundToInt(itemBounds.y * 10000), (newItem, productSO.id));
+                    packer.PackRect(Mathf.RoundToInt(itemBounds.z * 1000 * productSO.pickupPrefab.transform.localScale.z), Mathf.RoundToInt(itemBounds.x * 1000 * productSO.pickupPrefab.transform.localScale.x), (newItem, productSO.id));
                 }
 
                 foreach (PackerRectangle packRect in packer.PackRectangles)
@@ -180,8 +190,8 @@ namespace ShoppingList
                     NetworkObject component = item.GetComponent<NetworkObject>();
                     component.Spawn(false);
                     component.GetComponent<CheckoutItem>().ServerSetupItem(id, __instance);
-                    component.TrySetParent(__instance.transform, true);
-                    item.transform.localPosition += new Vector3((float)packRect.Rectangle.X / 10000, 0f, (float)packRect.Rectangle.Y / 10000 * -1);
+                    component.TrySetParent(__instance.gameObject.transform, true);
+                    item.transform.localPosition += new Vector3((float)packRect.Rectangle.Y / 1000, 0f, (float)packRect.Rectangle.X / 1000 * -1);
                 }
                 __instance.spawnedProducts = true;
                 if (employee != null)
